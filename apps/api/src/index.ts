@@ -16,7 +16,7 @@ import { errorHandler } from './middleware/errorHandler';
 import './jobs/submission.job';
 
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(helmet());
 app.use(
@@ -44,6 +44,6 @@ app.use('/api/v1/system', systemRoutes);
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`RoastCoder API listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`RoastCoder API listening on port ${PORT}`);
 });
