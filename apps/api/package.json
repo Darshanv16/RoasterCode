@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
-    "@roastcoder/shared": "workspace:*",
     "bcryptjs": "^2.4.3",
     "bullmq": "^5.7.8",
     "cors": "^2.8.5",
