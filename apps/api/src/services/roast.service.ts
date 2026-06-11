@@ -26,7 +26,18 @@ interface RoastResponse {
   hint: string;
 }
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+let groqClient: Groq | null = null;
+
+function getGroqClient(): Groq {
+  if (!groqClient) {
+    const apiKey = process.env.GROQ_API_KEY;
+    if (!apiKey) {
+      throw new Error('GROQ_API_KEY environment variable is not set');
+    }
+    groqClient = new Groq({ apiKey });
+  }
+  return groqClient;
+}
 
 function verdictLabel(verdict: string): string {
   const labels: Record<string, string> = {
@@ -121,7 +132,7 @@ function fallbackResponse(request: RoastRequest): RoastResponse {
 
 async function generateRoast(request: RoastRequest): Promise<RoastResponse> {
   try {
-    const completion = await groq.chat.completions.create({
+    const completion = await getGroqClient().chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: buildSystemPrompt(request.verdict) },
