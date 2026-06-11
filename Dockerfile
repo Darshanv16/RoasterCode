@@ -1,29 +1,18 @@
-FROM node:20-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
-# Install exact pnpm version matching local
-RUN npm install -g pnpm@11.5.2
+RUN npm install -g pnpm@9.0.0
 
-# Copy root workspace files
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
-
-# Copy all packages
 COPY packages/ ./packages/
 COPY apps/api/ ./apps/api/
 
-# Install dependencies
 RUN pnpm install --no-frozen-lockfile
 
-# Generate Prisma client
 WORKDIR /app/apps/api
 RUN npx prisma generate
-
-# Build TypeScript
 RUN pnpm run build
 
-# Expose port
 EXPOSE 3001
-
-# Start the server
 CMD ["node", "dist/index.js"]
