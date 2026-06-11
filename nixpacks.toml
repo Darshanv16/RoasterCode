@@ -1,11 +1,13 @@
 [phases.setup]
 nixPkgs = ["nodejs_20"]
+aptPkgs = ["curl"]
+cmds = ["curl -fsSL https://get.pnpm.io/install.sh | sh -", "export PNPM_HOME=/root/.local/share/pnpm", "export PATH=$PNPM_HOME:$PATH"]
 
 [phases.install]
-cmds = ["cd apps/api && npm install"]
+cmds = ["export PNPM_HOME=/root/.local/share/pnpm && export PATH=$PNPM_HOME:$PATH && pnpm install --frozen-lockfile"]
 
 [phases.build]
-cmds = ["cd apps/api && npx prisma generate && npm run build"]
+cmds = ["export PNPM_HOME=/root/.local/share/pnpm && export PATH=$PNPM_HOME:$PATH && cd apps/api && npx prisma generate && pnpm run build"]
 
 [start]
 cmd = "cd apps/api && node dist/index.js"
