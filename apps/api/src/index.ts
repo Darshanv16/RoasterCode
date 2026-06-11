@@ -44,6 +44,6 @@ app.use('/api/v1/system', systemRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`RoastCoder API listening on port ${PORT}`);
 });
