@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #05050a;
+    color: #e8e8ff;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6c55f5, #a855f7);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8b73ff;
+  }
+
+  ::selection {
+    background: rgba(108, 85, 245, 0.4);
+    color: #e8e8ff;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #6c55f5 0%, #a855f7 50%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-success {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(#1e1e30 1px, transparent 1px),
+      linear-gradient(90deg, #1e1e30 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-color: #05050a;
+  }
+  .hero-bg {
+    background: #05050a;
+    background-image: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(108, 85, 245, 0.25),
+      transparent
+    );
+  }
+  .aurora-bg {
+    background: linear-gradient(
+      -45deg,
+      rgba(108, 85, 245, 0.1),
+      rgba(168, 85, 247, 0.1),
+      rgba(59, 130, 246, 0.1),
+      rgba(16, 185, 129, 0.05)
+    );
+    background-size: 400% 400%;
+    animation: aurora 12s ease infinite;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 30px rgba(108, 85, 245, 0.3);
+  }
+  .glow-success {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+  }
+  .glow-danger {
+    box-shadow: 0 0 30px rgba(244, 63, 94, 0.3);
+  }
+  .glow-gold {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  }
+  .glow-text-accent {
+    text-shadow: 0 0 20px rgba(108, 85, 245, 0.8);
+  }
+
+  .glass {
+    background: rgba(13, 13, 20, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(108, 85, 245, 0.1);
+  }
+  .glass-strong {
+    background: rgba(13, 13, 20, 0.95);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+  }
+
+  .border-gradient {
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+  }
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #6c55f5, #a855f7);
+    z-index: -1;
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(108, 85, 245, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(108, 85, 245, 0.15);
+  }
+
+  .neon-underline {
+    position: relative;
+  }
+  .neon-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6c55f5, #a855f7);
+    box-shadow: 0 0 8px rgba(108, 85, 245, 0.8);
+    transition: width 0.3s ease;
+  }
+  .neon-underline:hover::after {
+    width: 100%;
+  }
+
+  .dots-bg {
+    background-image: radial-gradient(circle, #1e1e30 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+}
+
+.typewriter-cursor::after {
+  content: '|';
+  animation: cursor-blink 1s step-end infinite;
+  color: #6c55f5;
+  font-weight: 100;
+  margin-left: 2px;
+}
+
+.monaco-scrollable-element .scrollbar.vertical .slider {
+  background: linear-gradient(180deg, #6c55f5, #a855f7) !important;
+  border-radius: 10px !important;
+}

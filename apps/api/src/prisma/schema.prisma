@@ -1,0 +1,200 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  username      String   @unique
+  email         String   @unique
+  passwordHash  String
+  avatarUrl     String?
+  bio           String?
+  xp            Int      @default(0)
+  level         Int      @default(1)
+  streak        Int      @default(0)
+  maxStreak     Int      @default(0)
+  lastActiveAt  DateTime @default(now())
+  role          Role     @default(USER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  submissions        Submission[]
+  userAchievements   UserAchievement[]
+  refreshTokens      RefreshToken[]
+  learningProgress   LearningProgress[]
+  userCredits        UserCredits?
+  creditTransactions CreditTransaction[]
+  @@index([xp])
+  @@index([username])
+}
+
+model LearningProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  chapterId   Int
+  completedAt DateTime?
+  startedAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+  @@unique([userId, chapterId])
+}
+
+model UserCredits {
+  id      String @id @default(cuid())
+  userId  String @unique
+  credits Int    @default(0)
+  user    User   @relation(fields: [userId], references: [id])
+}
+
+model CreditTransaction {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Int
+  reason    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  @@index([userId])
+}
+
+model Problem {
+  id            String      @id @default(cuid())
+  slug          String      @unique
+  title         String
+  statement     String      @db.Text
+  difficulty    Difficulty
+  tags          String[]
+  constraints   String      @db.Text
+  starterCode   Json
+  hints         String[]
+  xpReward      Int
+  timeLimit     Int         @default(2000)
+  memoryLimit   Int         @default(256)
+  isPublished   Boolean     @default(false)
+  order         Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  testCases     TestCase[]
+  submissions   Submission[]
+  examples      Example[]
+  @@index([difficulty])
+  @@index([slug])
+}
+
+model Example {
+  id          String  @id @default(cuid())
+  problemId   String
+  input       String  @db.Text
+  output      String  @db.Text
+  explanation String? @db.Text
+  order       Int     @default(0)
+  problem     Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+}
+
+model TestCase {
+  id        String  @id @default(cuid())
+  problemId String
+  input     String  @db.Text
+  expected  String  @db.Text
+  isHidden  Boolean @default(true)
+  order     Int     @default(0)
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  @@index([problemId])
+}
+
+model Submission {
+  id              String    @id @default(cuid())
+  userId          String
+  problemId       String
+  code            String    @db.Text
+  language        String
+  verdict         Verdict   @default(PENDING)
+  runtime         Int?
+  memory          Int?
+  passedTests     Int       @default(0)
+  totalTests      Int       @default(0)
+  errorMessage    String?   @db.Text
+  expectedOutput  String?   @db.Text
+  actualOutput    String?   @db.Text
+  xpEarned        Int       @default(0)
+  roastGenerated  Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  user      User    @relation(fields: [userId], references: [id])
+  problem   Problem @relation(fields: [problemId], references: [id])
+  roast     Roast?
+  @@index([userId])
+  @@index([problemId])
+  @@index([createdAt])
+}
+
+model Roast {
+  id           String  @id @default(cuid())
+  submissionId String  @unique
+  verdict      String
+  mood         String
+  roast        String  @db.Text
+  explanation  String  @db.Text
+  hint         String  @db.Text
+  createdAt    DateTime @default(now())
+  submission   Submission @relation(fields: [submissionId], references: [id])
+}
+
+model Achievement {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  title       String
+  description String
+  icon        String
+  xpReward    Int     @default(0)
+  rarity      Rarity  @default(COMMON)
+  userAchievements UserAchievement[]
+}
+
+model UserAchievement {
+  userId        String
+  achievementId String
+  unlockedAt    DateTime @default(now())
+  user        User        @relation(fields: [userId], references: [id])
+  achievement Achievement @relation(fields: [achievementId], references: [id])
+  @@id([userId, achievementId])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([token])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum Rarity {
+  COMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+enum Verdict {
+  ACCEPTED
+  WRONG_ANSWER
+  RUNTIME_ERROR
+  COMPILATION_ERROR
+  TIME_LIMIT_EXCEEDED
+  MEMORY_LIMIT_EXCEEDED
+  PENDING
+}
