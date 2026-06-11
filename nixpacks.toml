@@ -2,10 +2,10 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["npm install -g pnpm@9.0.0", "cd apps/api && npm install"]
+cmds = ["npm install -g pnpm@9.0.0", "pnpm install --filter api --frozen-lockfile=false"]
 
 [phases.build]
-cmds = ["cd apps/api && npx prisma generate && npx tsc"]
+cmds = ["pnpm --filter api run build"]
 
 [start]
 cmd = "cd apps/api && node dist/index.js"
