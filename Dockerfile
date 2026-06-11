@@ -20,4 +20,4 @@ RUN npx prisma generate
 RUN pnpm run build
 
 EXPOSE 3001
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "cd /app/apps/api && npx prisma migrate deploy && npx prisma db seed && node dist/index.js"]
