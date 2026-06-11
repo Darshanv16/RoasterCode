@@ -2,8 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install exact pnpm version matching local
+RUN npm install -g pnpm@11.5.2
 
 # Copy root workspace files
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
@@ -13,7 +13,7 @@ COPY packages/ ./packages/
 COPY apps/api/ ./apps/api/
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile=false
+RUN pnpm install --no-frozen-lockfile
 
 # Generate Prisma client
 WORKDIR /app/apps/api
