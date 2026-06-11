@@ -1,7 +1,18 @@
 import Groq from 'groq-sdk';
 import { Problem } from '@prisma/client';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+let groqClient: any = null;
+
+function getGroqClient() {
+  if (!groqClient) {
+    const apiKey = process.env.GROQ_API_KEY;
+    if (!apiKey) {
+      throw new Error('GROQ_API_KEY not set');
+    }
+    groqClient = new Groq({ apiKey });
+  }
+  return groqClient;
+}
 
 export async function generatePetSolution(
   problem: Problem,
@@ -25,7 +36,7 @@ Respond with ONLY a JSON object (no markdown, no backticks):
   "explanation": "2-4 sentences explaining the approach in plain English"
 }`;
 
-  const completion = await groq.chat.completions.create({
+  const completion = await getGroqClient().chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
       {
@@ -68,7 +79,7 @@ ${currentCode || '(empty - they have not started yet)'}
 
 Give a short, encouraging, code-specific hint (2-3 sentences max). Reference their actual code when possible.`;
 
-  const completion = await groq.chat.completions.create({
+  const completion = await getGroqClient().chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
       {

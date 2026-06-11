@@ -26,13 +26,13 @@ interface RoastResponse {
   hint: string;
 }
 
-let groqClient: Groq | null = null;
+let groqClient: any = null;
 
-function getGroqClient(): Groq {
+function getGroqClient() {
   if (!groqClient) {
     const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
-      throw new Error('GROQ_API_KEY environment variable is not set');
+      throw new Error('GROQ_API_KEY not set');
     }
     groqClient = new Groq({ apiKey });
   }
