@@ -1,6 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
-import { RoastRequest } from '@roastcoder/shared';
 import { prisma } from '../lib/prisma';
+
+interface RoastRequest {
+  verdict: string;
+  code: string;
+  language: string;
+  problem: {
+    title: string;
+    difficulty: string;
+    statement: string;
+  };
+  expectedOutput?: string | null;
+  actualOutput?: string | null;
+  errorMessage?: string | null;
+}
 import { generateRoast, getRoastForSubmission } from '../services/roast.service';
 
 export async function createRoast(

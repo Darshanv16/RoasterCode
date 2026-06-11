@@ -205,15 +205,12 @@ export interface LanguageAvailability {
 
 let languageAvailabilityCache: LanguageAvailability | null = null;
 
-const execShell = process.platform === 'win32';
-
 function tryExec(command: string): string | null {
   try {
     const output = execSync(command, {
       stdio: ['ignore', 'pipe', 'pipe'],
       timeout: 5000,
-      encoding: 'utf8',
-      shell: execShell,
+      encoding: 'utf8' as const,
     });
     return output.trim().split('\n')[0]?.trim() || null;
   } catch (err) {
@@ -225,7 +222,7 @@ function tryExec(command: string): string | null {
 
 function isCommandInstalled(command: string): boolean {
   try {
-    execSync(command, { stdio: 'ignore', timeout: 5000, shell: execShell });
+    execSync(command, { stdio: 'ignore', timeout: 5000 });
     return true;
   } catch {
     return false;

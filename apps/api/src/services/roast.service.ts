@@ -1,7 +1,30 @@
 import Groq from 'groq-sdk';
 import { Roast } from '@prisma/client';
-import { RoastMood, RoastRequest, RoastResponse } from '@roastcoder/shared';
 import { prisma } from '../lib/prisma';
+
+type RoastMood = 'praise' | 'roast';
+
+interface RoastRequest {
+  verdict: string;
+  code: string;
+  language: string;
+  problem: {
+    title: string;
+    difficulty: string;
+    statement: string;
+  };
+  expectedOutput?: string | null;
+  actualOutput?: string | null;
+  errorMessage?: string | null;
+}
+
+interface RoastResponse {
+  verdict: string;
+  mood: RoastMood;
+  roast: string;
+  explanation: string;
+  hint: string;
+}
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
