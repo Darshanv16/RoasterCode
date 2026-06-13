@@ -20,4 +20,4 @@ RUN pnpm run build
 
 EXPOSE 8080
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "-e", "require('dotenv').config(); require('./dist/index.js')"]
