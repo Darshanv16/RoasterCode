@@ -11,9 +11,8 @@ export function errorHandler(
   res: Response,
   _next: NextFunction
 ): void {
-  if (process.env.NODE_ENV === 'development') {
-    console.error(err);
-  }
+  console.error('ERROR:', err.message);
+  console.error('STACK:', err.stack);
 
   if (err.name === 'ZodError') {
     res.status(400).json({ errors: (err as ZodError).flatten().fieldErrors });
