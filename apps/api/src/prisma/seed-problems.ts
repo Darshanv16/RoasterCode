@@ -1,11 +1,10 @@
-import { Difficulty } from '@prisma/client';
 import { starterCodesBySlug } from './seed-starter-codes';
 
 export interface ProblemSeed {
   slug: string;
   title: string;
   statement: string;
-  difficulty: Difficulty;
+  difficulty: string;
   tags: string[];
   constraints: string;
   starterCode: Record<string, string>;
@@ -20,7 +19,7 @@ export const problems: ProblemSeed[] = [
   {
     slug: 'two-sum',
     title: 'Two Sum',
-    difficulty: Difficulty.EASY,
+    difficulty: 'EASY' as any,
     tags: ['Array', 'Hash Table'],
     xpReward: 50,
     order: 1,
@@ -72,7 +71,7 @@ You can return the answer in any order.
   {
     slug: 'valid-parentheses',
     title: 'Valid Parentheses',
-    difficulty: Difficulty.EASY,
+    difficulty: 'EASY' as any,
     tags: ['Stack', 'String'],
     xpReward: 50,
     order: 2,
@@ -108,7 +107,7 @@ You can return the answer in any order.
   {
     slug: 'reverse-linked-list',
     title: 'Reverse Linked List',
-    difficulty: Difficulty.EASY,
+    difficulty: 'EASY' as any,
     tags: ['Linked List', 'Recursion'],
     xpReward: 50,
     order: 3,
@@ -144,7 +143,7 @@ You can return the answer in any order.
   {
     slug: 'best-time-to-buy-and-sell-stock',
     title: 'Best Time to Buy and Sell Stock',
-    difficulty: Difficulty.EASY,
+    difficulty: 'EASY' as any,
     tags: ['Array', 'Greedy'],
     xpReward: 50,
     order: 4,
@@ -180,7 +179,7 @@ You can return the answer in any order.
   {
     slug: 'climbing-stairs',
     title: 'Climbing Stairs',
-    difficulty: Difficulty.EASY,
+    difficulty: 'EASY' as any,
     tags: ['Dynamic Programming'],
     xpReward: 50,
     order: 5,
@@ -215,7 +214,7 @@ You can return the answer in any order.
   {
     slug: 'merge-intervals',
     title: 'Merge Intervals',
-    difficulty: Difficulty.MEDIUM,
+    difficulty: 'MEDIUM' as any,
     tags: ['Array', 'Sorting'],
     xpReward: 100,
     order: 6,
@@ -257,7 +256,7 @@ You can return the answer in any order.
   {
     slug: 'longest-substring-without-repeating-characters',
     title: 'Longest Substring Without Repeating Characters',
-    difficulty: Difficulty.MEDIUM,
+    difficulty: 'MEDIUM' as any,
     tags: ['Sliding Window', 'Hash Table'],
     xpReward: 100,
     order: 7,
@@ -293,7 +292,7 @@ You can return the answer in any order.
   {
     slug: 'binary-search',
     title: 'Binary Search',
-    difficulty: Difficulty.EASY,
+    difficulty: 'EASY' as any,
     tags: ['Binary Search', 'Array'],
     xpReward: 50,
     order: 8,
@@ -330,7 +329,7 @@ You can return the answer in any order.
   {
     slug: 'number-of-islands',
     title: 'Number of Islands',
-    difficulty: Difficulty.MEDIUM,
+    difficulty: 'MEDIUM' as any,
     tags: ['Graph', 'BFS', 'DFS'],
     xpReward: 100,
     order: 9,
@@ -376,7 +375,7 @@ You can return the answer in any order.
   {
     slug: 'coin-change',
     title: 'Coin Change',
-    difficulty: Difficulty.MEDIUM,
+    difficulty: 'MEDIUM' as any,
     tags: ['Dynamic Programming'],
     xpReward: 100,
     order: 10,
