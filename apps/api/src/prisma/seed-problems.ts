@@ -1,10 +1,11 @@
+import { AnyARecord } from 'dns';
 import { starterCodesBySlug } from './seed-starter-codes';
 
 export interface ProblemSeed {
   slug: string;
   title: string;
   statement: string;
-  difficulty: string;
+  difficulty: any;
   tags: string[];
   constraints: string;
   starterCode: Record<string, string>;
