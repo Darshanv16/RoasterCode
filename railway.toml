@@ -4,6 +4,3 @@ buildCommand = "pnpm install --no-frozen-lockfile && cd apps/api && pnpm exec pr
 
 [deploy]
 startCommand = "cd apps/api && node dist/index.js"
-
-[build.nixpacksPlan.phases.setup]
-nixPkgs = ["nodejs_18", "python3", "openssl"]
