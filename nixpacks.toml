@@ -2,4 +2,7 @@
 nixPkgs = ["nodejs_18", "python3", "openssl"]
 
 [phases.install]
-cmds = ["npm install -g pnpm && pnpm install --no-frozen-lockfile"]
+cmds = ["npm install -g pnpm@9 --prefix /usr/local && /usr/local/bin/pnpm install --no-frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd apps/api && /usr/local/bin/pnpm exec prisma generate --schema=src/prisma/schema.prisma && /usr/local/bin/pnpm exec tsc -p tsconfig.json"]
