@@ -22,7 +22,10 @@ const PORT = process.env.PORT || 3001;
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGIN,
+    origin: [
+      "http://localhost:3000",
+      "https://roaster-code-eh988a4kb-darshanv16s-projects.vercel.app",
+    ],
     credentials: true,
   })
 );
