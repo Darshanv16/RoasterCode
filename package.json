@@ -2,6 +2,9 @@
   "name": "roastcoder",
   "private": true,
   "packageManager": "pnpm@11.6.0",
+  "engines": {
+    "node": "20.x"
+  },
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev:api": "pnpm --filter api dev",
