@@ -1,4 +1,6 @@
 import 'dotenv/config';
+console.log("JWT_SECRET =", process.env.JWT_SECRET);
+console.log("JWT exists =", !!process.env.JWT_SECRET);
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
