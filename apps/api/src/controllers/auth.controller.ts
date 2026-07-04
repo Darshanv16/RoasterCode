@@ -130,6 +130,10 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
       return;
     }
 
+    console.log("User found:", !!user);
+    console.log("Password entered:", password);
+    console.log("Password valid:", await bcrypt.compare(password, user.passwordHash));
+
     const valid = await bcrypt.compare(password, user.passwordHash);
 
     if (!valid) {
